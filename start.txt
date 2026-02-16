@@ -1,0 +1,33 @@
+# Speed Loop Start
+
+Welcome to the Speed Loop system. This framework provides a structured approach to optimizing complex data processing systems.
+
+## Getting Started
+
+To begin your first Speed Loop iteration:
+
+1. **Web Search and Research**: Conduct deep research for improving the efficiency of complex data systems. Use the codebase as context to understand:
+   - What are the fundamental components of the system?
+   - What are the common bottlenecks in data processing?
+   - What optimization techniques apply to this domain?
+
+2. **Create The 10 Commandments**: Based on your research, write a document called `speed_loop/The_10_Commandments.md` that outlines the core principles for optimizing this system. This should include:
+   - Fundamental rules that must never be violated
+   - Key considerations for maintaining correctness
+   - Best practices for performance optimization
+   - Guidelines for measuring and verifying improvements
+
+3. **Review the Framework**: Read these documents to understand the Speed Loop methodology:
+   - `speed_loop/sacred_rules.md` - The inviolable rules
+   - `speed_loop/phase_rules/` - The six phases of optimization
+
+## First Iteration
+
+For your first Speed Loop iteration:
+
+1. Run the system with a canonical test payload
+2. Establish baseline metrics
+3. Identify the fundamental pieces
+4. Proceed through each phase systematically
+
+Remember: **Correctness first, performance second**. Any optimization that breaks output integrity is rejected, no matter how impressive the speedup.
