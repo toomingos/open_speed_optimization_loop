@@ -7,27 +7,32 @@ description: A structured framework for optimizing complex data processing syste
 
 A systematic approach to optimizing complex data processing systems while maintaining correctness.
 
+## Quick Flow
+
+```
+START
+ │
+ │ 1. Read references/start.txt
+ │ 2. Create 10 Optimization Commandments for your codebase
+ │ 3. Read sacred_rules.md + phase_rules/*
+ ▼
+┌────────────────────────────────────────────────────────────────────┐
+│                    SPEED LOOP                                      │
+│                                                                    │
+│  Phase1 ──► Phase2 ──► Phase3 ──► Phase4 ──► Phase5 ──► Phase6     │
+│  Understand  Decompose   Analyze   Implement  Verify    Integrate  │
+│       ▲                                                            │
+│       └────────────────────────────────────────────────────────────┤
+│             REPEAT (one optimization per iteration)                │
+└────────────────────────────────────────────────────────────────────┘
+```
+
 ## When to Use
 
 - Improving performance of data processing pipelines
 - Optimizing database queries or data transformations
 - Need a structured methodology for performance improvements
 - Want to measure and verify optimizations scientifically
-
-## The 10 Commandments
-
-See `references/10_commandments.md` for the core principles:
-
-1. Measure Percentiles, Not Averages
-2. Choose the Right Storage Engine for Your Access Pattern
-3. Design for Data Locality
-4. Partition to Eliminate Hotspots
-5. Precompute and Materialize Derived Data
-6. Skip Data You Don't Need
-7. Batch for Throughput, Stream for Latency
-8. Use Replication Strategically
-9. Encode Data Compactly
-10. Correctness Is Non-Negotiable
 
 ## Sacred Rules
 
@@ -80,7 +85,7 @@ See `references/phase_rules/` for detailed phase instructions:
 See `references/start.txt` for agent instructions:
 
 1. Conduct web research on optimizing data systems
-2. Create The 10 Commandments document
+2. Create The 10 Optimization Commandments document
 3. Read sacred rules and phase rules
 4. Begin first iteration with Phase 1
 

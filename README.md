@@ -36,7 +36,7 @@ After installation, the framework files are available in the package:
 node_modules/speed-loop-framework/
 ├── start.txt
 ├── sacred_rules.md
-├── 10_commandments.md
+├── 10_optimization_commandments_example.md
 ├── phase_rules/
 │   ├── 01_understand.md
 │   ├── 02_decompose.md
@@ -51,7 +51,7 @@ node_modules/speed-loop-framework/
 
 The Speed Loop framework provides a structured approach to performance optimization:
 
-1. **The 10 Commandments** - Core principles for building fast data-intensive applications
+1. **The 10 Optimization Commandments** - Core principles for building fast data-intensive applications
 2. **Sacred Rules** - Inviolable rules that ensure optimizations are real improvements
 3. **Phase Rules** - Six phases (Understand, Decompose, Analyze, Implement, Verify, Integrate)
 

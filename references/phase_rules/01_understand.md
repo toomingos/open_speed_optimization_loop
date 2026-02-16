@@ -9,16 +9,16 @@ Use sub-agents as needed.
 ## Prerequisites (First Loop)
 
 - Speed Loop framework created
-- 10 Commandments document exists
+- 10 Optimization Commandments document exists
 - Sacred Rules document exists
 - Read them all
 - Create or update speed_loop/fundamentals folder
 
 ### Prerequisites (>1 Loops)
 
-- Read 10 Commandments and Sacred Rules documents
+- Read 10 Optimization Commandments and Sacred Rules documents
 - Delete speed_loop/fundamentals folder
-- According to  Speed Loop framework, 10 Commandments and Sacred Rules use sub agents to rewrite speed_loop/fundamentals with updated architecture
+- According to  Speed Loop framework, 10 Optimization Commandments and Sacred Rules use sub agents to rewrite speed_loop/fundamentals with updated architecture
 
 ---
 
