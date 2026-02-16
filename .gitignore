@@ -1,0 +1,21 @@
+# Loop folders (speed loop iterations)
+loop_*/
+loop_*/
+
+# Build outputs
+node_modules/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test outputs
+*.json
+!package.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
