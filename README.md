@@ -1,68 +1,58 @@
 # Speed Loop Framework
 
-A structured framework for optimizing complex data processing systems through systematic speed loops.
+A systematic framework for optimizing complex data processing systems through iterative speed loops.
 
 ## Installation
 
 ```bash
-npm install speed-loop-framework
+npx skills add toomingos/open_speed_optimization_loop --skill speed-loop
 ```
 
-## Usage
+Or visit: https://skills.sh/toomingos/open_speed_optimization_loop/speed-loop
 
-### Reading Framework Files
+## For AI Agents
 
-```javascript
-const speedLoop = require('speed-loop-framework');
+This skill is designed for AI coding agents (Claude Code, Cursor, Windsurf, etc.). When installed, the agent will automatically have access to:
 
-// Read the start guide
-console.log(speedLoop.readFile('start'));
+- **SKILL.md** - The main skill definition with overview and flow
+- **references/** - Framework files the agent can read
 
-// Read sacred rules
-console.log(speedLoop.readFile('sacredRules'));
+### Quick Start
 
-// Read the 10 commandments
-console.log(speedLoop.readFile('tenCommandments'));
+1. Agent reads `references/start.txt` for instructions
+2. Agent creates `speed_loop/10_optimization_commandments.md` for your codebase
+3. Agent follows the six phases in `references/phase_rules/`
 
-// List available phase rules
-console.log(speedLoop.listPhaseRules());
-```
-
-### Manual Usage
-
-After installation, the framework files are available in the package:
+## Framework Structure
 
 ```
-node_modules/speed-loop-framework/
-├── start.txt
-├── sacred_rules.md
-├── 10_optimization_commandments_example.md
-├── phase_rules/
-│   ├── 01_understand.md
-│   ├── 02_decompose.md
-│   ├── 03_analyze.md
-│   ├── 04_implement.md
-│   ├── 05_verify.md
-│   └── 06_integrate.md
-└── index.js
+├── SKILL.md                 # Skill definition (what AI agents see)
+├── README.md                # This file
+└── references/             # Framework files
+    ├── start.txt           # Agent instructions
+    ├── sacred_rules.md     # Inviolable rules
+    ├── 10_optimization_commandments_example.md  # Example principles
+    └── phase_rules/       # Six phases
+        ├── 01_understand.md
+        ├── 02_decompose.md
+        ├── 03_analyze.md
+        ├── 04_implement.md
+        ├── 05_verify.md
+        └── 06_integrate.md
 ```
 
-## Framework Overview
+## The Speed Loop
 
-The Speed Loop framework provides a structured approach to performance optimization:
+```
+START → Read start.txt → Create 10 Optimization Commandments → 
+Read sacred_rules + phase_rules → Enter Speed Loop
 
-1. **The 10 Optimization Commandments** - Core principles for building fast data-intensive applications
-2. **Sacred Rules** - Inviolable rules that ensure optimizations are real improvements
-3. **Phase Rules** - Six phases (Understand, Decompose, Analyze, Implement, Verify, Integrate)
+SPEED LOOP (repeat):
+Phase1 Understand → Phase2 Decompose → Phase3 Analyze → 
+Phase4 Implement → Phase5 Verify → Phase6 Integrate → REPEAT
+```
 
-### The Six Phases
-
-- **Phase 1: Understand** - Establish complete understanding of the system
-- **Phase 2: Decompose** - Break down components into sub-components
-- **Phase 3: Analyze** - Deep analysis of optimization candidates
-- **Phase 4: Implement** - Implement optimizations in isolation
-- **Phase 5: Verify** - Verify correctness and measure improvement
-- **Phase 6: Integrate** - Apply verified optimizations to main codebase
+Each iteration = ONE optimization → Measure → Verify → Integrate
 
 ## Key Principles
 
@@ -73,10 +63,11 @@ The Speed Loop framework provides a structured approach to performance optimizat
 
 ## Framework Agnostic
 
-This framework is designed to be:
-- Language-agnostic (works with any programming language)
-- Framework-agnostic (works with any web framework or none)
-- Database-agnostic (works with any data storage system)
+Works with any:
+- Programming language
+- Web framework
+- Database or storage system
+- Data processing pipeline
 
 ## License
 
