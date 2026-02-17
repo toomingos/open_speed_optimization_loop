@@ -4,6 +4,7 @@ import {
   BarChart,
   Bar,
   BarXAxis,
+  BarYAxis,
   Grid,
   ChartTooltip,
 } from "@/components/ui/charts";
@@ -11,12 +12,13 @@ import { PatternLines } from "@visx/pattern";
 import { useChart } from "@/components/ui/charts/chart-context";
 import type { CaseStudyMeta } from "@/lib/content";
 import Link from "next/link";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface CaseStudyChartProps {
   data: CaseStudyMeta[];
 }
 
-// Component to render value labels on top of first and last bars
+// Component to render value labels on top of first and last bars (vertical only)
 function BarValueLabels({
   chartData,
 }: {
@@ -28,13 +30,12 @@ function BarValueLabels({
     _improvement: string;
   }>;
 }) {
-  const { barScale, bandWidth, yScale, isLoaded } = useChart();
+  const { barScale, bandWidth, yScale, isLoaded, orientation } = useChart();
 
-  if (!isLoaded || !barScale || !bandWidth || !yScale) {
+  if (!isLoaded || !barScale || !bandWidth || !yScale || orientation === "horizontal") {
     return null;
   }
 
-  // Show labels for first (loop 00) and last bar (loop 16)
   const labelsToShow = [0, chartData.length - 1];
 
   return (
@@ -66,7 +67,50 @@ function BarValueLabels({
 
 BarValueLabels.displayName = "BarValueLabels";
 
+function TooltipContent({ point }: { point: Record<string, unknown> }) {
+  const status = String(point._status ?? "");
+  const title = String(point._title ?? "");
+  const ms = Number(point._ms ?? 0);
+  const improvement = String(point._improvement ?? "");
+
+  const statusStyles =
+    status === "approved"
+      ? "bg-primary/10 text-primary border-primary/20"
+      : status === "rejected"
+        ? "bg-muted text-muted-foreground/60 border-border"
+        : status === "skipped"
+          ? "bg-orange-500/10 text-orange-400 border-orange-500/20"
+          : "bg-primary/5 text-primary/60 border-primary/15";
+
+  return (
+    <div className="flex flex-col gap-2 p-3 min-w-[200px]">
+      <div className="flex items-center gap-2">
+        <span className={`inline-flex items-center px-1.5 py-0.5 text-[9px] font-medium border rounded ${statusStyles}`}>
+          {status.charAt(0).toUpperCase() + status.slice(1)}
+        </span>
+        <span className="text-muted-foreground text-[10px]">
+          Loop {String(point.loop ?? "")}
+        </span>
+      </div>
+      <div className="text-xs font-medium leading-tight">
+        {title}
+      </div>
+      <div className="flex items-baseline gap-2 pt-1">
+        <span className="text-sm font-medium tabular-nums">
+          {ms.toLocaleString()}ms
+        </span>
+        {improvement && improvement !== "none" && improvement !== "—" && (
+          <span className="text-primary/80 text-[10px] font-medium">
+            {improvement}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function CaseStudyChart({ data }: CaseStudyChartProps) {
+  const isMobile = useIsMobile();
   const firstBaseline = data[0]?.baseline_ms ?? 0;
 
   // Build chart data: loop 00 = baseline, then each loop's result_ms
@@ -99,7 +143,7 @@ export function CaseStudyChart({ data }: CaseStudyChartProps) {
   ];
 
   return (
-    <section className="mb-32">
+    <section className="mb-16 sm:mb-32">
       <div className="flex items-center justify-between gap-3 mb-8">
         <div className="flex items-center gap-3 flex-1">
           <h2 className="font-pixel-square text-xl font-normal tracking-wide">
@@ -122,7 +166,7 @@ export function CaseStudyChart({ data }: CaseStudyChartProps) {
         </p>
 
         {/* Legend with progress indicators */}
-        <div className="flex items-center gap-6 text-xs">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs">
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1.5">
               <div className="w-3 h-3 rounded-sm bg-primary" />
@@ -168,20 +212,27 @@ export function CaseStudyChart({ data }: CaseStudyChartProps) {
         </div>
       </div>
 
-      <div className="border border-border p-5 lg:p-7 mt-6">
+      <div className="border border-border p-3 sm:p-5 lg:p-7 mt-6">
         <BarChart
           data={chartData}
           xDataKey="loop"
-          barGap={0.08}
+          barGap={isMobile ? 0.12 : 0.08}
           stacked
-          aspectRatio="3 / 1"
-          margin={{ top: 20, right: 20, bottom: 40, left: 50 }}
+          orientation={isMobile ? "horizontal" : "vertical"}
+          aspectRatio={isMobile ? "1 / 2" : "3 / 1"}
+          margin={
+            isMobile
+              ? { top: 10, right: 20, bottom: 10, left: 30 }
+              : { top: 20, right: 12, bottom: 40, left: 40 }
+          }
         >
           <Grid
-            horizontal
+            horizontal={!isMobile}
+            vertical={isMobile}
             numTicksRows={4}
             strokeDasharray="2,3"
-            fadeHorizontal
+            fadeHorizontal={!isMobile}
+            fadeVertical={isMobile}
             strokeOpacity={0.4}
           />
           <Bar
@@ -211,52 +262,12 @@ export function CaseStudyChart({ data }: CaseStudyChartProps) {
             lineCap={3}
             fadedOpacity={0.15}
           />
-          <BarXAxis showAllLabels />
+          {isMobile ? <BarYAxis showAllLabels /> : <BarXAxis maxLabels={10} />}
           <BarValueLabels chartData={chartData} />
           <ChartTooltip
             showCrosshair={false}
             showDots={false}
-            content={({ point }) => {
-              const status = String(point._status ?? "");
-              const title = String(point._title ?? "");
-              const ms = Number(point._ms ?? 0);
-              const improvement = String(point._improvement ?? "");
-
-              const statusStyles =
-                status === "approved"
-                  ? "bg-primary/10 text-primary border-primary/20"
-                  : status === "rejected"
-                    ? "bg-muted text-muted-foreground/60 border-border"
-                    : status === "skipped"
-                      ? "bg-orange-500/10 text-orange-400 border-orange-500/20"
-                      : "bg-primary/5 text-primary/60 border-primary/15";
-
-              return (
-                <div className="flex flex-col gap-2 p-3 min-w-[200px]">
-                  <div className="flex items-center gap-2">
-                    <span className={`inline-flex items-center px-1.5 py-0.5 text-[9px] font-medium border rounded ${statusStyles}`}>
-                      {status.charAt(0).toUpperCase() + status.slice(1)}
-                    </span>
-                    <span className="text-muted-foreground text-[10px]">
-                      Loop {String(point.loop ?? "")}
-                    </span>
-                  </div>
-                  <div className="text-xs font-medium leading-tight">
-                    {title}
-                  </div>
-                  <div className="flex items-baseline gap-2 pt-1">
-                    <span className="text-sm font-medium tabular-nums">
-                      {ms.toLocaleString()}ms
-                    </span>
-                    {improvement && improvement !== "none" && improvement !== "—" && (
-                      <span className="text-primary/80 text-[10px] font-medium">
-                        {improvement}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              );
-            }}
+            content={({ point }) => <TooltipContent point={point} />}
           />
         </BarChart>
       </div>

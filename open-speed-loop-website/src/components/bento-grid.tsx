@@ -35,7 +35,7 @@ export function BentoGrid({ caseStudies }: BentoGridProps) {
     : 0;
 
   return (
-    <section className="mb-32">
+    <section className="mb-16 sm:mb-32">
       {/*
         Desktop (lg): 4-column, 2-row grid
         Row 1: Sacred Rules (2 cols, 2 rows) | Speed Gain (2 cols)
@@ -78,7 +78,7 @@ export function BentoGrid({ caseStudies }: BentoGridProps) {
             Case Study
           </p>
           <div>
-            <span className="font-pixel-square text-5xl lg:text-6xl font-normal text-primary tracking-tight">
+            <span className="font-pixel-square text-4xl sm:text-5xl lg:text-6xl font-normal text-primary tracking-tight">
               {reductionPct}%
             </span>
             <span className="text-xl text-muted-foreground ml-2">faster</span>

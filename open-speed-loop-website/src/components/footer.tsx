@@ -62,7 +62,7 @@ function FooterLink({
 export function Footer() {
   return (
     <footer className="border-t border-border">
-      <div className="max-w-[95rem] mx-auto px-8 py-12 lg:py-16">
+      <div className="max-w-[95rem] mx-auto px-4 sm:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 lg:gap-16">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">

@@ -38,7 +38,7 @@ const RULES = [
 
 export function SacredRules() {
   return (
-    <section className="mb-32">
+    <section className="mb-16 sm:mb-32">
       <div className="flex items-center gap-3 mb-8">
         <h2
           className="font-pixel-square text-xl font-normal tracking-wide"

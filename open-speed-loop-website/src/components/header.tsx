@@ -25,7 +25,7 @@ export function Header() {
 
   return (
     <header className="relative z-10">
-      <div className="max-w-[95rem] mx-auto px-8 py-6 flex items-center justify-between">
+      <div className="max-w-[95rem] mx-auto px-4 sm:px-8 py-6 flex items-center justify-between">
         <Link href="/" className="font-pixel-square text-sm tracking-[0.1em]">
           OSOL
         </Link>
@@ -115,7 +115,7 @@ export function Header() {
 
       {isMobileMenuOpen && (
         <div className="md:hidden fixed top-[73px] left-0 right-0 bg-background/98 backdrop-blur-md border-t border-border z-[9999]">
-          <nav className="max-w-[95rem] mx-auto px-8 py-6 space-y-4">
+          <nav className="max-w-[95rem] mx-auto px-4 sm:px-8 py-6 space-y-4">
             {NAV_LINKS.map((link) =>
               link.external ? (
                 <a

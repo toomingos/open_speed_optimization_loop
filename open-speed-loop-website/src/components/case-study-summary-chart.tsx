@@ -4,12 +4,14 @@ import {
   BarChart,
   Bar,
   BarXAxis,
+  BarYAxis,
   Grid,
   ChartTooltip,
 } from "@/components/ui/charts";
 import { PatternLines } from "@visx/pattern";
 import { useChart } from "@/components/ui/charts/chart-context";
 import type { CaseStudyMeta } from "@/lib/content";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Props {
   data: CaseStudyMeta[];
@@ -26,9 +28,11 @@ function BarValueLabels({
     _improvement: string;
   }>;
 }) {
-  const { barScale, bandWidth, yScale, isLoaded } = useChart();
+  const { barScale, bandWidth, yScale, isLoaded, orientation } = useChart();
 
-  if (!isLoaded || !barScale || !bandWidth || !yScale) return null;
+  if (!isLoaded || !barScale || !bandWidth || !yScale || orientation === "horizontal") {
+    return null;
+  }
 
   const labelsToShow = [0, chartData.length - 1];
 
@@ -59,6 +63,7 @@ function BarValueLabels({
 BarValueLabels.displayName = "BarValueLabels";
 
 export function CaseStudySummaryChart({ data }: Props) {
+  const isMobile = useIsMobile();
   const firstBaseline = data[0]?.baseline_ms ?? 0;
 
   const chartData = [
@@ -92,7 +97,7 @@ export function CaseStudySummaryChart({ data }: Props) {
   return (
     <div>
       {/* Legend */}
-      <div className="flex items-center gap-6 text-xs mb-4">
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs mb-4">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-3 rounded-sm bg-primary" />
@@ -152,16 +157,23 @@ export function CaseStudySummaryChart({ data }: Props) {
         <BarChart
           data={chartData}
           xDataKey="loop"
-          barGap={0.08}
+          barGap={isMobile ? 0.12 : 0.08}
           stacked
-          aspectRatio="2 / 1"
-          margin={{ top: 20, right: 10, bottom: 30, left: 40 }}
+          orientation={isMobile ? "horizontal" : "vertical"}
+          aspectRatio={isMobile ? "1 / 2" : "2 / 1"}
+          margin={
+            isMobile
+              ? { top: 10, right: 20, bottom: 10, left: 30 }
+              : { top: 20, right: 10, bottom: 30, left: 40 }
+          }
         >
           <Grid
-            horizontal
+            horizontal={!isMobile}
+            vertical={isMobile}
             numTicksRows={4}
             strokeDasharray="2,3"
-            fadeHorizontal
+            fadeHorizontal={!isMobile}
+            fadeVertical={isMobile}
             strokeOpacity={0.4}
           />
           <Bar
@@ -191,7 +203,7 @@ export function CaseStudySummaryChart({ data }: Props) {
             lineCap={3}
             fadedOpacity={0.15}
           />
-          <BarXAxis showAllLabels />
+          {isMobile ? <BarYAxis showAllLabels /> : <BarXAxis maxLabels={10} />}
           <BarValueLabels chartData={chartData} />
           <ChartTooltip
             showCrosshair={false}

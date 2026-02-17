@@ -10,11 +10,11 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
-      <div className="max-w-[95rem] mx-auto px-8 py-20 lg:py-32">
+      <div className="max-w-[95rem] mx-auto px-4 sm:px-8 py-12 sm:py-20 lg:py-32">
         {/* Hero */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 mb-32">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 mb-16 sm:mb-32">
           <div className="flex flex-col justify-center">
-            <h1 className="font-pixel-square text-4xl lg:text-5xl font-normal leading-tight tracking-wide max-w-[600px] mb-6">
+            <h1 className="font-pixel-square text-2xl sm:text-4xl lg:text-5xl font-normal leading-tight tracking-wide max-w-[600px] mb-6">
               OPEN SPEED OPTIMISATION LOOP
             </h1>
             <p className="text-muted-foreground text-sm leading-relaxed font-light mb-8 max-w-xl">
@@ -99,7 +99,7 @@ export default function Home() {
         {/* Case Study Chart */}
         <CaseStudyChart data={caseStudies} />
 
-        <div className="bg-dotted h-[45px] w-full mb-20" />
+        <div className="bg-dotted h-[45px] w-full mb-10 sm:mb-20" />
 
         {/* CTA */}
         <section className="text-center space-y-8 pb-12">
