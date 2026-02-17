@@ -1,0 +1,36 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-request", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Request", "duration": "", "highlight": false } },
+      { "id": "b-edges", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Query B", "duration": "500ms", "highlight": false } },
+      { "id": "b-nodes", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Query A", "duration": "500ms", "highlight": false } },
+      { "id": "b-count", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Count Query", "duration": "500ms", "highlight": true, "removed": true } },
+      { "id": "b-build", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Build Map", "duration": "", "highlight": false } },
+      { "id": "b-response", "type": "step", "position": { "x": 0, "y": 400 }, "data": { "label": "Response", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-request-edges", "source": "b-request", "target": "b-edges", "type": "smoothstep", "animated": true },
+      { "id": "e-b-edges-nodes", "source": "b-edges", "target": "b-nodes", "type": "smoothstep", "animated": true },
+      { "id": "e-b-nodes-count", "source": "b-nodes", "target": "b-count", "type": "smoothstep", "animated": true },
+      { "id": "e-b-count-build", "source": "b-count", "target": "b-build", "type": "smoothstep", "animated": true },
+      { "id": "e-b-build-response", "source": "b-build", "target": "b-response", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-request", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Request", "duration": "", "highlight": false } },
+      { "id": "a-edges", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Query B", "duration": "500ms", "highlight": false } },
+      { "id": "a-nodes", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Query A", "duration": "500ms", "highlight": false } },
+      { "id": "a-derive", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Derive Count", "duration": "<1ms", "highlight": true, "added": true } },
+      { "id": "a-build", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Build Map", "duration": "", "highlight": false } },
+      { "id": "a-response", "type": "step", "position": { "x": 0, "y": 400 }, "data": { "label": "Response", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-request-edges", "source": "a-request", "target": "a-edges", "type": "smoothstep", "animated": true },
+      { "id": "e-a-edges-nodes", "source": "a-edges", "target": "a-nodes", "type": "smoothstep", "animated": true },
+      { "id": "e-a-nodes-derive", "source": "a-nodes", "target": "a-derive", "type": "smoothstep", "animated": true },
+      { "id": "e-a-derive-build", "source": "a-derive", "target": "a-build", "type": "smoothstep", "animated": true },
+      { "id": "e-a-build-response", "source": "a-build", "target": "a-response", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

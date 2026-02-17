@@ -1,0 +1,32 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-graph", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Map Data", "duration": "", "highlight": false } },
+      { "id": "b-pagerank", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Signal (fixed)", "duration": "", "highlight": true } },
+      { "id": "b-scores", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Signals", "duration": "", "highlight": false } },
+      { "id": "b-heuristics", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Filtering", "duration": "", "highlight": false } },
+      { "id": "b-response", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Response", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-graph-pagerank", "source": "b-graph", "target": "b-pagerank", "type": "smoothstep", "animated": true },
+      { "id": "e-b-pagerank-scores", "source": "b-pagerank", "target": "b-scores", "type": "smoothstep", "animated": true },
+      { "id": "e-b-scores-heuristics", "source": "b-scores", "target": "b-heuristics", "type": "smoothstep", "animated": true },
+      { "id": "e-b-heuristics-response", "source": "b-heuristics", "target": "b-response", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-graph", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Map Data", "duration": "", "highlight": false } },
+      { "id": "a-pagerank", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Signal (converge)", "duration": "", "highlight": true } },
+      { "id": "a-scores", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Signals", "duration": "", "highlight": false } },
+      { "id": "a-heuristics", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Filtering", "duration": "", "highlight": false } },
+      { "id": "a-response", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Response", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-graph-pagerank", "source": "a-graph", "target": "a-pagerank", "type": "smoothstep", "animated": true },
+      { "id": "e-a-pagerank-scores", "source": "a-pagerank", "target": "a-scores", "type": "smoothstep", "animated": true },
+      { "id": "e-a-scores-heuristics", "source": "a-scores", "target": "a-heuristics", "type": "smoothstep", "animated": true },
+      { "id": "e-a-heuristics-response", "source": "a-heuristics", "target": "a-response", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

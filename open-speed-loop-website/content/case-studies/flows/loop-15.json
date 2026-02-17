@@ -1,0 +1,34 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-data", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Element Data", "duration": "", "highlight": false } },
+      { "id": "b-pass1", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Pass 1", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-pass2", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Pass 2", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-pass3", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Pass 3", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-pass4", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Pass 4", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-filter", "type": "step", "position": { "x": 0, "y": 400 }, "data": { "label": "Filter", "duration": "", "highlight": false } },
+      { "id": "b-build", "type": "step", "position": { "x": 0, "y": 480 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-data-pass1", "source": "b-data", "target": "b-pass1", "type": "smoothstep", "animated": true },
+      { "id": "e-b-pass1-pass2", "source": "b-pass1", "target": "b-pass2", "type": "smoothstep", "animated": true },
+      { "id": "e-b-pass2-pass3", "source": "b-pass2", "target": "b-pass3", "type": "smoothstep", "animated": true },
+      { "id": "e-b-pass3-pass4", "source": "b-pass3", "target": "b-pass4", "type": "smoothstep", "animated": true },
+      { "id": "e-b-pass4-filter", "source": "b-pass4", "target": "b-filter", "type": "smoothstep", "animated": true },
+      { "id": "e-b-filter-build", "source": "b-filter", "target": "b-build", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-data", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Element Data", "duration": "", "highlight": false } },
+      { "id": "a-single", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Single Pass", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-filter", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Filter", "duration": "", "highlight": false } },
+      { "id": "a-build", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-data-single", "source": "a-data", "target": "a-single", "type": "smoothstep", "animated": true },
+      { "id": "e-a-single-filter", "source": "a-single", "target": "a-filter", "type": "smoothstep", "animated": true },
+      { "id": "e-a-filter-build", "source": "a-filter", "target": "a-build", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

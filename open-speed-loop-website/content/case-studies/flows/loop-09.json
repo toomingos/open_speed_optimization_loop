@@ -1,0 +1,31 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-bounce", "type": "step", "position": { "x": 125, "y": 0 }, "data": { "label": "Upstream CTE", "duration": "", "highlight": false } },
+      { "id": "b-sesscount", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Aggregation (ref 1)", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-multifilter", "type": "step", "position": { "x": 250, "y": 80 }, "data": { "label": "Multi-Record Filter", "duration": "", "highlight": false } },
+      { "id": "b-transitions", "type": "step", "position": { "x": 125, "y": 160 }, "data": { "label": "Transitions", "duration": "", "highlight": false } },
+      { "id": "b-build", "type": "step", "position": { "x": 125, "y": 240 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-bounce-sess", "source": "b-bounce", "target": "b-sesscount", "type": "smoothstep", "animated": true },
+      { "id": "e-b-bounce-multi", "source": "b-bounce", "target": "b-multifilter", "type": "smoothstep", "animated": true },
+      { "id": "e-b-sess-trans", "source": "b-sesscount", "target": "b-transitions", "type": "smoothstep", "animated": true },
+      { "id": "e-b-multi-trans", "source": "b-multifilter", "target": "b-transitions", "type": "smoothstep", "animated": true },
+      { "id": "e-b-trans-build", "source": "b-transitions", "target": "b-build", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-bounce", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Combined CTE", "duration": "", "highlight": true } },
+      { "id": "a-multifilter", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Multi-Record Filter", "duration": "", "highlight": false } },
+      { "id": "a-transitions", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Transitions", "duration": "", "highlight": false } },
+      { "id": "a-build", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-bounce-multi", "source": "a-bounce", "target": "a-multifilter", "type": "smoothstep", "animated": true },
+      { "id": "e-a-multi-trans", "source": "a-multifilter", "target": "a-transitions", "type": "smoothstep", "animated": true },
+      { "id": "e-a-trans-build", "source": "a-transitions", "target": "a-build", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

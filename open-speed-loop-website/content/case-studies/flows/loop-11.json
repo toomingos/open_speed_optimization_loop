@@ -1,0 +1,30 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-upstream", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Upstream CTEs", "duration": "", "highlight": false } },
+      { "id": "b-bounce", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Transform CTE A", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-repetition", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Transform CTE B", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-transitions", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Transitions", "duration": "", "highlight": false } },
+      { "id": "b-build", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Build Map", "duration": "9 CTEs", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-up-bounce", "source": "b-upstream", "target": "b-bounce", "type": "smoothstep", "animated": true },
+      { "id": "e-b-bounce-rep", "source": "b-bounce", "target": "b-repetition", "type": "smoothstep", "animated": true },
+      { "id": "e-b-rep-trans", "source": "b-repetition", "target": "b-transitions", "type": "smoothstep", "animated": true },
+      { "id": "e-b-trans-build", "source": "b-transitions", "target": "b-build", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-upstream", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Upstream CTEs", "duration": "", "highlight": false } },
+      { "id": "a-combined", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Combined CTE", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-transitions", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Transitions", "duration": "", "highlight": false } },
+      { "id": "a-build", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Build Map", "duration": "7 CTEs", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-up-combined", "source": "a-upstream", "target": "a-combined", "type": "smoothstep", "animated": true },
+      { "id": "e-a-combined-trans", "source": "a-combined", "target": "a-transitions", "type": "smoothstep", "animated": true },
+      { "id": "e-a-trans-build", "source": "a-transitions", "target": "a-build", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

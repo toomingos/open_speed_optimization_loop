@@ -1,0 +1,35 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-request", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Request", "duration": "", "highlight": false } },
+      { "id": "b-exec", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Query Execution", "duration": "925ms", "highlight": true } },
+      { "id": "b-build", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Build Map", "duration": "", "highlight": false } },
+      { "id": "b-response", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Response", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-request-exec", "source": "b-request", "target": "b-exec", "type": "smoothstep", "animated": true },
+      { "id": "e-b-exec-build", "source": "b-exec", "target": "b-build", "type": "smoothstep", "animated": true },
+      { "id": "e-b-build-response", "source": "b-build", "target": "b-response", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-request", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Request", "duration": "", "highlight": false } },
+      { "id": "a-cache-check", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Cache Check", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-cache-hit", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Cache Hit", "duration": "136ms", "highlight": true, "added": true } },
+      { "id": "a-cache-miss", "type": "step", "position": { "x": 250, "y": 160 }, "data": { "label": "Query Execution", "duration": "925ms", "highlight": false } },
+      { "id": "a-store", "type": "step", "position": { "x": 250, "y": 240 }, "data": { "label": "Store in Cache", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-build", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Build Map", "duration": "", "highlight": false } },
+      { "id": "a-response", "type": "step", "position": { "x": 0, "y": 400 }, "data": { "label": "Response", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-request-cache", "source": "a-request", "target": "a-cache-check", "type": "smoothstep", "animated": true },
+      { "id": "e-a-cache-hit", "source": "a-cache-check", "target": "a-cache-hit", "type": "smoothstep", "animated": true },
+      { "id": "e-a-cache-miss", "source": "a-cache-check", "target": "a-cache-miss", "type": "smoothstep", "animated": true },
+      { "id": "e-a-miss-store", "source": "a-cache-miss", "target": "a-store", "type": "smoothstep", "animated": true },
+      { "id": "e-a-hit-build", "source": "a-cache-hit", "target": "a-build", "type": "smoothstep", "animated": true },
+      { "id": "e-a-store-build", "source": "a-store", "target": "a-build", "type": "smoothstep", "animated": true },
+      { "id": "e-a-build-response", "source": "a-build", "target": "a-response", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

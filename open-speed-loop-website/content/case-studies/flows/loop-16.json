@@ -1,0 +1,36 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-query", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "DB Query", "duration": "", "highlight": true } },
+      { "id": "b-raw", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Raw Data", "duration": "", "highlight": false } },
+      { "id": "b-count", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "App: Pass 1", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-stats", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "App: Pass 2", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-starts", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "App: Pass 3", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-ends", "type": "step", "position": { "x": 0, "y": 400 }, "data": { "label": "App: Pass 4", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-heuristics", "type": "step", "position": { "x": 0, "y": 480 }, "data": { "label": "Filtering", "duration": "", "highlight": false } },
+      { "id": "b-build", "type": "step", "position": { "x": 0, "y": 560 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-query-raw", "source": "b-query", "target": "b-raw", "type": "smoothstep", "animated": true },
+      { "id": "e-b-raw-count", "source": "b-raw", "target": "b-count", "type": "smoothstep", "animated": true },
+      { "id": "e-b-count-stats", "source": "b-count", "target": "b-stats", "type": "smoothstep", "animated": true },
+      { "id": "e-b-stats-starts", "source": "b-stats", "target": "b-starts", "type": "smoothstep", "animated": true },
+      { "id": "e-b-starts-ends", "source": "b-starts", "target": "b-ends", "type": "smoothstep", "animated": true },
+      { "id": "e-b-ends-heuristics", "source": "b-ends", "target": "b-heuristics", "type": "smoothstep", "animated": true },
+      { "id": "e-b-heuristics-build", "source": "b-heuristics", "target": "b-build", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-query", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "DB Query (agg)", "duration": "", "highlight": true } },
+      { "id": "a-precomp", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Pre-computed Stats", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-heuristics", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Filtering", "duration": "", "highlight": false } },
+      { "id": "a-build", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-query-precomp", "source": "a-query", "target": "a-precomp", "type": "smoothstep", "animated": true },
+      { "id": "e-a-precomp-heuristics", "source": "a-precomp", "target": "a-heuristics", "type": "smoothstep", "animated": true },
+      { "id": "e-a-heuristics-build", "source": "a-heuristics", "target": "a-build", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-request", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Request", "duration": "", "highlight": false } },
+      { "id": "b-fork", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Fork", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-edges", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Query B", "duration": "500ms", "highlight": true, "removed": true } },
+      { "id": "b-nodes", "type": "step", "position": { "x": 250, "y": 160 }, "data": { "label": "Query A", "duration": "500ms", "highlight": true, "removed": true } },
+      { "id": "b-join", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Join", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-build", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Build Map", "duration": "", "highlight": false } },
+      { "id": "b-response", "type": "step", "position": { "x": 0, "y": 400 }, "data": { "label": "Response", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-request-fork", "source": "b-request", "target": "b-fork", "type": "smoothstep", "animated": true },
+      { "id": "e-b-fork-edges", "source": "b-fork", "target": "b-edges", "type": "smoothstep", "animated": true },
+      { "id": "e-b-fork-nodes", "source": "b-fork", "target": "b-nodes", "type": "smoothstep", "animated": true },
+      { "id": "e-b-edges-join", "source": "b-edges", "target": "b-join", "type": "smoothstep", "animated": true },
+      { "id": "e-b-nodes-join", "source": "b-nodes", "target": "b-join", "type": "smoothstep", "animated": true },
+      { "id": "e-b-join-build", "source": "b-join", "target": "b-build", "type": "smoothstep", "animated": true },
+      { "id": "e-b-build-response", "source": "b-build", "target": "b-response", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-request", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Request", "duration": "", "highlight": false } },
+      { "id": "a-combined", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "UNION ALL Query", "duration": "1200ms", "highlight": true, "added": true } },
+      { "id": "a-split", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Split Results", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-build", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Build Map", "duration": "", "highlight": false } },
+      { "id": "a-response", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Response", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-request-combined", "source": "a-request", "target": "a-combined", "type": "smoothstep", "animated": true },
+      { "id": "e-a-combined-split", "source": "a-combined", "target": "a-split", "type": "smoothstep", "animated": true },
+      { "id": "e-a-split-build", "source": "a-split", "target": "a-build", "type": "smoothstep", "animated": true },
+      { "id": "e-a-build-response", "source": "a-build", "target": "a-response", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

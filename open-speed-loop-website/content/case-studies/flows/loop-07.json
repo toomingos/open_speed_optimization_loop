@@ -1,0 +1,33 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-base", "type": "step", "position": { "x": 125, "y": 0 }, "data": { "label": "Base CTE", "duration": "", "highlight": false } },
+      { "id": "b-key-filter", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Filter CTE (ref 1)", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-sequencing", "type": "step", "position": { "x": 250, "y": 80 }, "data": { "label": "Processing CTE (ref 2)", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-position", "type": "step", "position": { "x": 125, "y": 160 }, "data": { "label": "Position Filter", "duration": "", "highlight": false } },
+      { "id": "b-build", "type": "step", "position": { "x": 125, "y": 240 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-base-key", "source": "b-base", "target": "b-key-filter", "type": "smoothstep", "animated": true },
+      { "id": "e-b-base-seq", "source": "b-base", "target": "b-sequencing", "type": "smoothstep", "animated": true },
+      { "id": "e-b-key-pos", "source": "b-key-filter", "target": "b-position", "type": "smoothstep", "animated": true },
+      { "id": "e-b-seq-pos", "source": "b-sequencing", "target": "b-position", "type": "smoothstep", "animated": true },
+      { "id": "e-b-pos-build", "source": "b-position", "target": "b-build", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-base", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Base CTE", "duration": "", "highlight": false } },
+      { "id": "a-window", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Window Function", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-sequencing", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Downstream CTE", "duration": "", "highlight": false } },
+      { "id": "a-position", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Position Filter", "duration": "", "highlight": false } },
+      { "id": "a-build", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-base-window", "source": "a-base", "target": "a-window", "type": "smoothstep", "animated": true },
+      { "id": "e-a-window-seq", "source": "a-window", "target": "a-sequencing", "type": "smoothstep", "animated": true },
+      { "id": "e-a-seq-pos", "source": "a-sequencing", "target": "a-position", "type": "smoothstep", "animated": true },
+      { "id": "e-a-pos-build", "source": "a-position", "target": "a-build", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

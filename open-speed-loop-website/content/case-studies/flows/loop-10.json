@@ -1,0 +1,32 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-sessfilter", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Group Filter", "duration": "", "highlight": false } },
+      { "id": "b-join", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "INNER JOIN", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-base", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Base Data", "duration": "", "highlight": false } },
+      { "id": "b-pipeline", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Pipeline", "duration": "", "highlight": false } },
+      { "id": "b-build", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-sess-join", "source": "b-sessfilter", "target": "b-join", "type": "smoothstep", "animated": true },
+      { "id": "e-b-join-base", "source": "b-join", "target": "b-base", "type": "smoothstep", "animated": true },
+      { "id": "e-b-base-pipe", "source": "b-base", "target": "b-pipeline", "type": "smoothstep", "animated": true },
+      { "id": "e-b-pipe-build", "source": "b-pipeline", "target": "b-build", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-sessfilter", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Group Filter", "duration": "", "highlight": false } },
+      { "id": "a-hashset", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "IN Subquery", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-base", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Base Data", "duration": "", "highlight": false } },
+      { "id": "a-pipeline", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Pipeline", "duration": "", "highlight": false } },
+      { "id": "a-build", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-sess-hash", "source": "a-sessfilter", "target": "a-hashset", "type": "smoothstep", "animated": true },
+      { "id": "e-a-hash-base", "source": "a-hashset", "target": "a-base", "type": "smoothstep", "animated": true },
+      { "id": "e-a-base-pipe", "source": "a-base", "target": "a-pipeline", "type": "smoothstep", "animated": true },
+      { "id": "e-a-pipe-build", "source": "a-pipeline", "target": "a-build", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

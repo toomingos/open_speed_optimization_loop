@@ -1,0 +1,32 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-events", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Records", "duration": "", "highlight": false } },
+      { "id": "b-asc", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "ASC Sort", "duration": "", "highlight": false } },
+      { "id": "b-desc", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "DESC Sort", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-bounce", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Boundary Marker", "duration": "", "highlight": false } },
+      { "id": "b-build", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-events-asc", "source": "b-events", "target": "b-asc", "type": "smoothstep", "animated": true },
+      { "id": "e-b-asc-desc", "source": "b-asc", "target": "b-desc", "type": "smoothstep", "animated": true },
+      { "id": "e-b-desc-bounce", "source": "b-desc", "target": "b-bounce", "type": "smoothstep", "animated": true },
+      { "id": "e-b-bounce-build", "source": "b-bounce", "target": "b-build", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-events", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Records", "duration": "", "highlight": false } },
+      { "id": "a-asc", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "ASC Sort", "duration": "", "highlight": false } },
+      { "id": "a-arith", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Arithmetic Formula", "duration": "", "highlight": true, "added": true, "error": true } },
+      { "id": "a-bounce", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Boundary Marker", "duration": "", "highlight": false } },
+      { "id": "a-build", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-events-asc", "source": "a-events", "target": "a-asc", "type": "smoothstep", "animated": true },
+      { "id": "e-a-asc-arith", "source": "a-asc", "target": "a-arith", "type": "smoothstep", "animated": true },
+      { "id": "e-a-arith-bounce", "source": "a-arith", "target": "a-bounce", "type": "smoothstep", "animated": true },
+      { "id": "e-a-bounce-build", "source": "a-bounce", "target": "a-build", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

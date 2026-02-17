@@ -1,0 +1,60 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-request", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Request", "duration": "", "highlight": false } },
+      { "id": "b-query-b", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Query B", "duration": "500ms", "highlight": true, "removed": true } },
+      { "id": "b-query-a", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Query A", "duration": "500ms", "highlight": true, "removed": true } },
+      { "id": "b-count", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Count Query", "duration": "500ms", "highlight": true, "removed": true } },
+
+      { "id": "b-pass1", "type": "step", "position": { "x": 80, "y": 240 }, "data": { "label": "App: Pass 1", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-pass2", "type": "step", "position": { "x": 80, "y": 160 }, "data": { "label": "App: Pass 2", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-pass3", "type": "step", "position": { "x": 80, "y": 80 }, "data": { "label": "App: Pass 3", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-pass4", "type": "step", "position": { "x": 80, "y": 0 }, "data": { "label": "App: Pass 4", "duration": "", "highlight": true, "removed": true } },
+
+      { "id": "b-signal", "type": "step", "position": { "x": 160, "y": 0 }, "data": { "label": "Signal (fixed)", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-filter", "type": "step", "position": { "x": 160, "y": 80 }, "data": { "label": "Filtering", "duration": "", "highlight": false } },
+      { "id": "b-build", "type": "step", "position": { "x": 160, "y": 160 }, "data": { "label": "Build Map", "duration": "", "highlight": false } },
+      { "id": "b-response", "type": "step", "position": { "x": 160, "y": 240 }, "data": { "label": "Response", "duration": "1,829ms", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-req-qb", "source": "b-request", "target": "b-query-b", "type": "smoothstep", "animated": true },
+      { "id": "e-b-qb-qa", "source": "b-query-b", "target": "b-query-a", "type": "smoothstep", "animated": true },
+      { "id": "e-b-qa-count", "source": "b-query-a", "target": "b-count", "type": "smoothstep", "animated": true },
+      { "id": "e-b-count-p1", "source": "b-count", "target": "b-pass1", "type": "smoothstep", "animated": true, "sourceHandle": "bottom", "targetHandle": "bottom" },
+      { "id": "e-b-p1-p2", "source": "b-pass1", "target": "b-pass2", "type": "smoothstep", "animated": true },
+      { "id": "e-b-p2-p3", "source": "b-pass2", "target": "b-pass3", "type": "smoothstep", "animated": true },
+      { "id": "e-b-p3-p4", "source": "b-pass3", "target": "b-pass4", "type": "smoothstep", "animated": true },
+      { "id": "e-b-p4-sig", "source": "b-pass4", "target": "b-signal", "type": "smoothstep", "animated": true, "sourceHandle": "bottom", "targetHandle": "bottom" },
+      { "id": "e-b-sig-filt", "source": "b-signal", "target": "b-filter", "type": "smoothstep", "animated": true },
+      { "id": "e-b-filt-build", "source": "b-filter", "target": "b-build", "type": "smoothstep", "animated": true },
+      { "id": "e-b-build-resp", "source": "b-build", "target": "b-response", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-request", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Request", "duration": "", "highlight": false } },
+      { "id": "a-fork", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Fork", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-query-b", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Query B (agg)", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-query-a", "type": "step", "position": { "x": 0, "y": 250 }, "data": { "label": "Query A (agg)", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-join", "type": "step", "position": { "x": 0, "y": 320 }, "data": { "label": "Join", "duration": "", "highlight": true, "added": true } },
+
+      { "id": "a-precomp", "type": "step", "position": { "x": 80, "y": 320 }, "data": { "label": "Pre-computed Stats", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-signal", "type": "step", "position": { "x": 80, "y": 240 }, "data": { "label": "Signal (converge)", "duration": "", "highlight": true, "added": true } },
+      { "id": "a-filter", "type": "step", "position": { "x": 80, "y": 160 }, "data": { "label": "Filtering", "duration": "", "highlight": false } },
+      { "id": "a-build", "type": "step", "position": { "x": 80, "y": 80 }, "data": { "label": "Build Map", "duration": "", "highlight": false } },
+      { "id": "a-response", "type": "step", "position": { "x": 80, "y": 0 }, "data": { "label": "Response", "duration": "352ms", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-req-fork", "source": "a-request", "target": "a-fork", "type": "smoothstep", "animated": true },
+      { "id": "e-a-fork-qb", "source": "a-fork", "target": "a-query-b", "type": "smoothstep", "animated": true },
+      { "id": "e-a-fork-qa", "source": "a-fork", "target": "a-query-a", "type": "smoothstep", "animated": true },
+      { "id": "e-a-qb-join", "source": "a-query-b", "target": "a-join", "type": "smoothstep", "animated": true },
+      { "id": "e-a-qa-join", "source": "a-query-a", "target": "a-join", "type": "smoothstep", "animated": true },
+      { "id": "e-a-join-pre", "source": "a-join", "target": "a-precomp", "type": "smoothstep", "animated": true, "sourceHandle": "bottom", "targetHandle": "bottom" },
+      { "id": "e-a-pre-sig", "source": "a-precomp", "target": "a-signal", "type": "smoothstep", "animated": true },
+      { "id": "e-a-sig-filt", "source": "a-signal", "target": "a-filter", "type": "smoothstep", "animated": true },
+      { "id": "e-a-filt-build", "source": "a-filter", "target": "a-build", "type": "smoothstep", "animated": true },
+      { "id": "e-a-build-resp", "source": "a-build", "target": "a-response", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

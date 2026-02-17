@@ -1,0 +1,28 @@
+{
+  "before": {
+    "nodes": [
+      { "id": "b-events", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Records", "duration": "", "highlight": false } },
+      { "id": "b-rownum", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "DESC Row Number", "duration": "", "highlight": true, "removed": true } },
+      { "id": "b-bounce", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Boundary Marker", "duration": "", "highlight": false } },
+      { "id": "b-build", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-b-events-rownum", "source": "b-events", "target": "b-rownum", "type": "smoothstep", "animated": true },
+      { "id": "e-b-rownum-bounce", "source": "b-rownum", "target": "b-bounce", "type": "smoothstep", "animated": true },
+      { "id": "e-b-bounce-build", "source": "b-bounce", "target": "b-build", "type": "smoothstep", "animated": true }
+    ]
+  },
+  "after": {
+    "nodes": [
+      { "id": "a-events", "type": "step", "position": { "x": 0, "y": 0 }, "data": { "label": "Records", "duration": "", "highlight": false } },
+      { "id": "a-maxts", "type": "step", "position": { "x": 0, "y": 80 }, "data": { "label": "Max Timestamp", "duration": "", "highlight": true, "added": true, "error": true } },
+      { "id": "a-bounce", "type": "step", "position": { "x": 0, "y": 160 }, "data": { "label": "Boundary Marker", "duration": "", "highlight": false } },
+      { "id": "a-build", "type": "step", "position": { "x": 0, "y": 240 }, "data": { "label": "Build Map", "duration": "", "highlight": false } }
+    ],
+    "edges": [
+      { "id": "e-a-events-maxts", "source": "a-events", "target": "a-maxts", "type": "smoothstep", "animated": true },
+      { "id": "e-a-maxts-bounce", "source": "a-maxts", "target": "a-bounce", "type": "smoothstep", "animated": true },
+      { "id": "e-a-bounce-build", "source": "a-bounce", "target": "a-build", "type": "smoothstep", "animated": true }
+    ]
+  }
+}

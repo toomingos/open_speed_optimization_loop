@@ -10,8 +10,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 
-# Test outputs
-*.json
+# Test outputs (skill root only, not website)
+/*.json
 !package.json
 
 # IDE
@@ -19,3 +19,7 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
+
+# Website build artifacts
+open-speed-loop-website/.next
+open-speed-loop-website/out
