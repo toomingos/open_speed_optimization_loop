@@ -1,138 +1,80 @@
 # Phase 3: Analyze
 
-**Objective**: Deep analysis of top optimization candidates to determine implementation approach and expected impact.
+**Objective**: Select one candidate, analyze it fully, and design a verification plan.
 
 ---
 
-## Prerequisites
-
-- Phase 2 complete
-- Fundamental documents written
-- Optimization candidates prioritized
+## Sacred Rules in Play
+- **Rule 1** — every candidate needs a risk assessment for output changes before any code is written. Unmitigable risk = REJECTED here.
+- **Rule 3** — no verification plan = not ready for Phase 4.
+- **Rule 5** — select exactly ONE candidate. Two inseparable candidates = one optimization or two loops.
 
 ---
 
 ## Tasks
 
-### 3.1 Select Top Candidates
+### 3.0 Set Tasks
 
-From the prioritized list, select the top 3-5 candidates for this iteration:
+Create the following tasks before doing any other work:
+- #1 Review commandments
+- #2 Select candidate
+- #3 Deep dive analysis (sub-agent)
+- #4 Write verification plan
 
-| Candidate | Expected Impact | Effort | Risk |
-|-----------|-----------------|--------|------|
-| [Candidate A] | X-Y% | Low/Medium/High | Low/Medium/High |
-| [Candidate B] | X-Y% | Low/Medium/High | Low/Medium/High |
-| [Candidate C] | X-Y% | Low/Medium/High | Low/Medium/High |
+### 3.1 Review Commandments
 
-### 3.2 Deep Dive Analysis
+Read `speed_loop/10_optimization_commandments.md`. List which commandments apply to the selected candidate and why. Every section in `phase3_analysis.md` must cite: "Satisfies Commandment #N because [reason]."
 
-For each candidate, analyze:
+### 3.2 Select the Single Candidate
 
-#### 3.2.1 Current Implementation
-- Read the exact code paths
-- Understand data flow
-- Identify allocation points
-- Count iterations
+Pick the top ≥5% candidate from Phase 2. Document the selection table:
 
-#### 3.2.2 Proposed Changes
-- Describe the optimization clearly
-- Pseudocode or design sketch
-- Identify affected files
-- List required changes
+| Candidate | Expected % | Commandment | Effort | Risk | Status |
+|-----------|-----------|-------------|--------|------|--------|
+| [Selected] | X–Y% | #N | Low | Low | **Selected** |
+| [Deferred] | A–B% | #N | High | Med | Deferred — [reason] |
 
-#### 3.2.3 Risk Assessment
-- What could break?
-- What edge cases exist?
-- How do we verify correctness?
+### 3.3 Deep Dive Analysis
 
-#### 3.2.4 Effort Estimation
-- Lines of code changed
-- New dependencies required
-- Testing complexity
+Launch an Explore sub-agent to retrieve: exact code paths, file:line references, allocation points, and query calls for the selected candidate. Do not read source files yourself — wait for the sub-agent's findings.
 
-### 3.3 Design Verification Approach
+Write to `speed_loop/loop_XX/phase3_analysis.md`:
 
-For each optimization chosen:
+**Current Implementation** — code paths and mechanics from sub-agent findings.
 
-1. **Input capture**: How to capture test inputs
-2. **Output comparison**: How to compare before/after
-3. **Edge cases**: What unusual inputs to test
-4. **Timing points**: Where to add checkpoints
+**Proposed Change** — before/after pseudocode, files to modify, any public interface changes (flag as risk).
 
-### 3.4 Document Analysis
+**Risk Assessment (Rule 1)**
+| Risk | Affected output fields | Mitigation |
+|------|----------------------|------------|
+| [risk] | [fields] | [mitigation] |
 
-Create analysis document for each candidate:
+If any risk has no mitigation: STOP, choose the next candidate.
 
-```markdown
-# Analysis: [Optimization Name]
+**Commandment Justification** — "Satisfies Commandment #N because [reason]."
 
-## Current State
-[Description of current implementation]
+**Effort** — files changed, LOC delta, new dependencies.
 
-## Proposed Change
-[Description of optimization]
+### 3.4 Verification Plan
 
-## Expected Impact
-- Time reduction: X-Y%
-- Memory impact: +/-Z%
-
-## Implementation Steps
-1. Step 1
-2. Step 2
-...
-
-## Verification Plan
-- Test inputs: [description]
-- Comparison method: [byte/semantic]
-- Success criteria: [metrics]
-
-## Risks and Mitigations
-| Risk | Mitigation |
-|------|------------|
-| ... | ... |
-```
+- Benchmark plan: `speed_loop/benchmark_plan.md`
+- Comparison: byte diff / epsilon=1e-9 for floats
+- Fields to exclude: [timing fields, request IDs]
+- Edge cases: ≥3 additional inputs
+- Checkpoint locations: [where to add timing logs]
+- Success criteria: measured ≥2%, expected ≥5%
 
 ---
 
 ## Outputs
 
-- [ ] Top candidates selected
-- [ ] Analysis document per candidate
-- [ ] Verification plan per candidate
-- [ ] Implementation order determined
+- [ ] Single candidate selected with rationale
+- [ ] `phase3_analysis.md` written (Rule 1 risk assessment + commandment justification)
+- [ ] Verification plan complete with success criteria
+- [ ] `README.md` updated with selected candidate name
 
----
+## Tasks to Create
 
-## Analysis Checklist
+One Phase 4 task: files to modify, checkpoint locations, link to verification plan, note "Rule 5 — this change only."
 
-For each optimization candidate:
-
-- [ ] Current code fully understood
-- [ ] Change clearly designed
-- [ ] Impact estimated with reasoning
-- [ ] Risks identified
-- [ ] Verification approach defined
-- [ ] Implementation steps listed
-
----
-
-## Task Management
-
-At the end of this phase:
-
-1. Create implementation tasks for Phase 4
-2. Order tasks by priority and dependencies
-3. Assign verification requirements to each
-
----
-
-## Next Phase Criteria
-
-Phase 3 is complete when:
-
-1. All selected candidates have analysis documents
-2. Implementation order is determined
-3. Verification plans are defined
-4. Phase 4 tasks are created
-
-**Proceed to**: [Phase 4: Implement](./04_implement.md)
+**Proceed to**: `references/phase_rules/04_implement.md`

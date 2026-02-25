@@ -1,105 +1,64 @@
 ---
 name: speed-loop
-description: A structured framework for optimizing complex data processing systems through systematic speed loops. Use when you need to improve performance of data-intensive applications.
+description: Systematically optimizes a data processing flow through iterative speed loops. Use when the user wants to improve performance of a data pipeline, query, or processing endpoint. Invoke with the flow to optimize: /speed-loop path/to/file or /speed-loop describe the flow
 ---
 
-# Speed Loop Framework
+# Speed Loop
 
-A systematic approach to optimizing complex data processing systems while maintaining correctness.
+If `$ARGUMENTS` is empty, stop and ask: "What flow or file do you want to optimize?" Do not proceed until the user provides it.
 
-## Quick Flow
+The flow to optimize is: **$ARGUMENTS**
+
+Read `references/start.md` now. The flow above is your `[FLOW]` throughout that document.
+
+---
+
+## File Locations
+
+**Framework (read-only):** `references/`
+- `start.md` — entry point
+- `sacred_rules.md` — 7 inviolable rules
+- `10_optimization_commandments_example.md` — commandments template
+- `phase_rules/01_understand.md` → `06_integrate.md`
+
+**Working directory (gitignored):** `speed_loop/` at project root
+- `speed_loop/10_optimization_commandments.md` — project-specific commandments
+- `speed_loop/fundamentals/` — architecture docs, rebuilt each loop
+- `speed_loop/loop_01/`, `loop_02/`, ... — one directory per iteration
+
+## Loop Directory Structure
 
 ```
-START
- │
- │ 1. Read references/start.txt
- │ 2. Create 10 Optimization Commandments for your codebase
- │ 3. Read sacred_rules.md + phase_rules/*
- ▼
-┌────────────────────────────────────────────────────────────────────┐
-│                    SPEED LOOP                                      │
-│                                                                    │
-│  Phase1 ──► Phase2 ──► Phase3 ──► Phase4 ──► Phase5 ──► Phase6     │
-│  Understand  Decompose   Analyze   Implement  Verify    Integrate  │
-│       ▲                                                            │
-│       └────────────────────────────────────────────────────────────┤
-│             REPEAT (one optimization per iteration)                │
-└────────────────────────────────────────────────────────────────────┘
+loop_XX/
+├── README.md               # status + navigation
+├── phase1_understand.md
+├── phase2_decompose.md
+├── phase3_analysis.md
+├── phase4_implement.md
+├── phase5_results.md       # verification + decision
+├── phase6_integrate.md     # only if APPROVED
+├── HANDOFF.md
+├── benchmarks/
+│   ├── baseline.json
+│   ├── optimized.json
+│   └── comparison.md
+└── test_server/
 ```
 
-## When to Use
-
-- Improving performance of data processing pipelines
-- Optimizing database queries or data transformations
-- Need a structured methodology for performance improvements
-- Want to measure and verify optimizations scientifically
+Always `lowercase_snake_case`. Never ALL_CAPS filenames.
 
 ## Sacred Rules
 
-See `references/sacred_rules.md` - These are **INVIOLABLE**:
+See `references/sacred_rules.md`. Always cite by number when justifying decisions.
 
-1. **Output Integrity Must Be Preserved** - Same inputs must produce same outputs
-2. **Verification Checkpoints Are Mandatory** - Every optimization must be measured
-3. **Speed Gains Without Correctness Are Rejected** - Wrong results = failure
-4. **Test Environment Isolation** - Test in isolation before integration
-5. **One Optimization Per Iteration** - Isolate variables
-6. **Document Everything** - Future iterations depend on documentation
-7. **Rollback Readiness** - Every change must be reversible
+1. **Output Integrity** — same inputs → identical outputs
+2. **Verification Checkpoints** — every optimization measured quantitatively
+3. **Correctness First** — wrong results = failure, regardless of speedup
+4. **Test Environment Isolation** — changes only in `test_server/` until Phase 6
+5. **One Optimization Per Iteration** — exactly one change per loop
+6. **Document Everything** — hypothesis, implementation, measurements, decision
+7. **Rollback Readiness** — every change reversible via git tag
 
-## The Six Phases
+## The 10 Commandments
 
-See `references/phase_rules/` for detailed phase instructions:
-
-### Phase 1: Understand
-- Identify fundamental pieces of the system
-- Read current implementation
-- Establish baseline metrics
-
-### Phase 2: Decompose
-- Break down each component into sub-components
-- Identify costs (time, complexity, allocations)
-- Rank optimization opportunities
-
-### Phase 3: Analyze
-- Select top candidates
-- Deep dive analysis
-- Design verification approach
-
-### Phase 4: Implement
-- Set up isolated test environment
-- Add checkpoint instrumentation
-- Implement one optimization
-
-### Phase 5: Verify
-- Output integrity verification
-- Performance measurement
-- Statistical significance
-
-### Phase 6: Integrate
-- Apply verified changes to main codebase
-- Create commits and tags
-- Archive loop artifacts
-
-## Getting Started
-
-See `references/start.txt` for agent instructions:
-
-1. Conduct web research on optimizing data systems
-2. Create The 10 Optimization Commandments document
-3. Read sacred rules and phase rules
-4. Begin first iteration with Phase 1
-
-## Key Principles
-
-- **Correctness First**: Same inputs must produce same outputs
-- **One Optimization Per Iteration**: Isolate variables to understand impact
-- **Measure Everything**: Quantitative evidence required for all improvements
-- **Verify Before Integrating**: Test in isolation before main codebase changes
-
-## Framework Agnostic
-
-This skill is designed to work with:
-- Any programming language
-- Any web framework
-- Any database or storage system
-- Any data processing pipeline
+See `references/10_optimization_commandments_example.md`. These are engineering principles — general best practices for building fast systems on this stack. Always cite by number (#1–#10) when documenting optimization decisions.

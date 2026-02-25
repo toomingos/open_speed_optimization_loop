@@ -1,145 +1,74 @@
 # Phase 4: Implement
 
-**Objective**: Implement optimizations in the isolated test environment.
+**Objective**: Implement the one selected optimization inside `test_server/`.
 
 ---
 
-## Prerequisites
+## Sacred Rules in Play
+- **Rule 4** — every change goes in `test_server/` ONLY. If you're editing outside it, STOP.
+- **Rule 5** — exactly one change. New improvements found during implementation go in `phase4_implement.md` under "Future Candidates" — not in code.
+- **Rule 7** — confirm main branch is clean before starting.
 
-- Phase 3 complete
-- Analysis documents exist
-- Verification plans defined
-- Test environment created
+Write at the top of `phase4_implement.md`: "Isolated to `test_server/` (Rule 4). One optimization only (Rule 5)."
 
 ---
 
 ## Tasks
 
-### 4.1 Set Up Test Environment
+### 4.0 Set Tasks
 
-Create isolated test environment:
+Create the following tasks before doing any other work:
+- #1 Review commandments
+- #2 Set up test environment
+- #3 Add checkpoint instrumentation
+- #4 Implement
+- #5 Capture output
 
-```
-speed_loop/loop_XX/test_environment/
-├── [config files]
-├── [source copy]
-└── [start script]
-```
+### 4.1 Review Commandments
 
-Configuration:
-- Different configuration to avoid conflicts
-- Different port than main (if applicable)
-- Same environment variables needed
+Read `speed_loop/10_optimization_commandments.md`. List which commandments apply to this implementation and cite them in `phase4_implement.md`.
 
-### 4.2 Add Checkpoint Instrumentation
+### 4.2 Set Up Test Environment
 
-Add timing checkpoints to key processing files:
+Populate `speed_loop/loop_XX/test_server/` as a runnable copy:
+- Different port than main
+- Same env vars and database connections
+- Independent package name if your stack requires it
 
-```typescript
-// Example (adjust for your language/framework)
-const checkpoints = {
-  start: Date.now(),
-  phases: {} as Record<string, number>
-};
+### 4.3 Add Checkpoint Instrumentation
 
-function checkpoint(name: string) {
-  checkpoints.phases[name] = Date.now() - checkpoints.start;
-  console.log(`[CHECKPOINT] phase=${name} elapsed_ms=${checkpoints.phases[name]}`);
-}
-```
+Add timing logs at entry, each major stage, and exit — in both main and test environments. Adapt the log format to your stack's logging conventions, but ensure start/stage/complete markers exist. These logs are the evidence for Phase 5.
 
-### 4.3 Implement One Optimization
+### 4.4 Implement
 
-**SACRED RULE**: One optimization per iteration.
+- [ ] Change fully understood before writing
+- [ ] Minimal, focused changes — no unrelated cleanup
+- [ ] All public interfaces preserved
+- [ ] Non-obvious changes commented with rationale
+- [ ] Code compiles / passes linter
 
-Implementation checklist:
-- [ ] Understand the change completely
-- [ ] Make minimal code changes
-- [ ] Preserve all public interfaces
-- [ ] Add any necessary tests
-- [ ] Verify compilation
+### 4.5 Capture Output
 
-### 4.4 Run Test Environment
+Both environments must be running. Use the benchmark plan from `speed_loop/benchmark_plan.md`. Run each and save:
+- `speed_loop/loop_XX/benchmarks/baseline_output.json` — main environment
+- `speed_loop/loop_XX/benchmarks/test_output.json` — test environment
+- `speed_loop/loop_XX/benchmarks/baseline.json` and `optimized.json` — timing data
 
-```bash
-# Adjust for your setup
-cd speed_loop/loop_XX/test_environment
-[build command]
-[run command]
-```
-
-### 4.5 Capture Checkpoint Logs
-
-Run test request and capture output:
-
-```bash
-# Adjust for your API endpoint
-curl -X POST http://localhost:TEST_PORT/api/endpoint \
-  -H "Content-Type: application/json" \
-  -d @test_payload.json \
-  | tee loop_XX/benchmarks/test_output.json
-
-# Capture logs
-[log capture command] > loop_XX/benchmarks/checkpoints.log
-```
+Write findings to `phase4_implement.md`: files modified, checkpoint locations, build status (PASS/FAIL), future candidates discovered (if any).
 
 ---
 
 ## Outputs
 
-- [ ] Test environment running
-- [ ] Checkpoint instrumentation added
-- [ ] Optimization implemented
-- [ ] Test output captured
-- [ ] Checkpoint logs captured
+- [ ] `test_server/` running (Rule 4 ✓)
+- [ ] Checkpoints in both environments
+- [ ] One optimization implemented (Rule 5 ✓)
+- [ ] `benchmarks/baseline_output.json` and `test_output.json` captured
+- [ ] `phase4_implement.md` written with isolation confirmation
+- [ ] `README.md` updated
 
----
+## Tasks to Create
 
-## Implementation Guidelines
+One Phase 5 task: output file paths, checkpoint log paths, note "Rule 1 — any diff = REJECT."
 
-### DO:
-- Keep changes minimal and focused
-- Comment any non-obvious optimizations
-- Preserve existing behavior exactly
-- Log timing at each checkpoint
-
-### DON'T:
-- Refactor unrelated code
-- Change public APIs
-- Modify multiple components at once
-- Skip checkpoint logging
-
----
-
-## Checkpoint Locations
-
-Required checkpoints:
-
-1. **processing_start**: When processing begins
-2. **phase_1_complete**: After first phase
-3. **phase_2_complete**: After second phase
-4. **phase_N_complete**: After each subsequent phase
-5. **processing_complete**: Before returning result
-
----
-
-## Task Management
-
-At the end of this phase:
-
-1. Update task with implementation status
-2. Create verification task for Phase 5
-3. Record any unexpected findings
-
----
-
-## Next Phase Criteria
-
-Phase 4 is complete when:
-
-1. Test environment compiles and runs
-2. Checkpoints produce timing logs
-3. Optimization is implemented
-4. Test output is captured
-
-**Proceed to**: [Phase 5: Verify](./05_verify.md)
+**Proceed to**: `references/phase_rules/05_verify.md`

@@ -16,7 +16,7 @@ Or install from [skills.sh/toomingos/open_speed_optimization_loop/speed-loop](ht
 Once installed, tell your AI agent:
 
 ```
-read references/start.txt
+read references/start.md
 ```
 
 The agent reads the skill definition, sacred rules, phase guides, and example optimization commandments — then follows the structured methodology automatically.

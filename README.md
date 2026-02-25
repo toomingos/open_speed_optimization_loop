@@ -19,7 +19,7 @@ This skill is designed for AI coding agents (Claude Code, Cursor, Windsurf, etc.
 
 ### Quick Start
 
-1. Agent reads `references/start.txt` for instructions
+1. Agent reads `references/start.md` for instructions
 2. Agent creates `speed_loop/10_optimization_commandments.md` for your codebase
 3. Agent follows the six phases in `references/phase_rules/`
 
@@ -29,7 +29,7 @@ This skill is designed for AI coding agents (Claude Code, Cursor, Windsurf, etc.
 ├── SKILL.md                 # Skill definition (what AI agents see)
 ├── README.md                # This file
 └── references/             # Framework files
-    ├── start.txt           # Agent instructions
+    ├── start.md            # Agent instructions
     ├── sacred_rules.md     # Inviolable rules
     ├── 10_optimization_commandments_example.md  # Example principles
     └── phase_rules/       # Six phases
@@ -44,7 +44,7 @@ This skill is designed for AI coding agents (Claude Code, Cursor, Windsurf, etc.
 ## The Speed Loop
 
 ```
-START → Read start.txt → Create 10 Optimization Commandments → 
+START → Read start.md → Create 10 Optimization Commandments →
 Read sacred_rules + phase_rules → Enter Speed Loop
 
 SPEED LOOP (repeat):

@@ -1,203 +1,116 @@
 # Phase 5: Verify
 
-**Objective**: Verify that optimization preserves output integrity and achieves performance improvement.
+**Objective**: Confirm output integrity first, then measure performance.
 
 ---
 
-## Prerequisites
-
-- Phase 4 complete
-- Test environment running with optimization
-- Baseline output captured
-- Test output captured
+## Sacred Rules in Play
+- **Rule 1** — diff outputs before looking at any performance numbers. Any difference = REJECTED. No exceptions.
+- **Rule 2** — every performance claim backed by checkpoint logs across ≥5 runs.
+- **Rule 3** — output difference means REJECTED regardless of speedup.
 
 ---
 
 ## Tasks
 
-### 5.1 Output Integrity Verification
+### 5.0 Set Tasks
 
-Compare outputs between baseline and optimized environments.
+Create the following tasks before doing any other work:
+- #1 Review commandments
+- #2 Output diff (Rule 1 — must be first)
+- #3 Performance measurement
+- #4 Statistical significance
+- #5 Write results
 
-#### 5.1.1 Capture Baseline Output
+### 5.1 Review Commandments
 
-```bash
-# Run against main environment
-curl -X POST http://localhost:MAIN_PORT/api/endpoint \
-  -H "Content-Type: application/json" \
-  -d @test_payload.json \
-  > baseline_output.json
+Read `speed_loop/10_optimization_commandments.md`. List which commandments apply to this verification and cite them in `phase5_results.md`. Correctness result goes first — never lead with speed.
 
-# Get result when complete
-curl http://localhost:MAIN_PORT/api/endpoint/{request_id}/result \
-  > baseline_result.json
-```
-
-#### 5.1.2 Capture Test Output
+### 5.2 Output Diff (Rule 1 — do this FIRST)
 
 ```bash
-# Run against test environment
-curl -X POST http://localhost:TEST_PORT/api/endpoint \
-  -H "Content-Type: application/json" \
-  -d @test_payload.json \
-  > test_output.json
-
-# Get result when complete
-curl http://localhost:TEST_PORT/api/endpoint/{request_id}/result \
-  > test_result.json
+jq 'del(.processing_time, .timestamps, .duration_ms)' \
+  speed_loop/loop_XX/benchmarks/baseline_output.json > /tmp/baseline_clean.json
+jq 'del(.processing_time, .timestamps, .duration_ms)' \
+  speed_loop/loop_XX/benchmarks/test_output.json > /tmp/test_clean.json
+diff /tmp/baseline_clean.json /tmp/test_clean.json
 ```
 
-#### 5.1.3 Compare Results
+Any diff output → write REJECTED in `phase5_results.md` and stop.
 
-```bash
-# Remove timing fields for comparison (adjust field names)
-jq 'del(.processing_time, .timestamps)' baseline_result.json > baseline_clean.json
-jq 'del(.processing_time, .timestamps)' test_result.json > test_clean.json
+If your output contains floating-point values, use epsilon comparison (threshold: 1e-9) instead of byte diff to avoid false failures from rounding.
 
-# Compare
-diff baseline_clean.json test_clean.json
-```
+### 5.3 Performance Measurement (only if 5.2 passed)
 
-**SACRED RULE**: Any difference here is a FAILURE. Do not proceed.
+Run ≥5 iterations against each environment using `speed_loop/benchmark_plan.md`. Collect checkpoint logs.
 
-### 5.2 Semantic Comparison (if needed)
+| Checkpoint | Baseline p50 | Optimized p50 | Δ | % |
+|------------|-------------|---------------|---|---|
+| stage_N    | Xms | Yms | | |
+| **total**  | **Xms** | **Yms** | | |
 
-For floating-point values:
-
-```python
-import json
-
-def compare_values(baseline, test, epsilon=1e-9):
-    for key in baseline:
-        b_val = baseline[key]
-        t_val = test[key]
-        if isinstance(b_val, float) and isinstance(t_val, float):
-            if abs(b_val - t_val) > epsilon:
-                return False, f"Value mismatch for {key}: {b_val} vs {t_val}"
-        elif b_val != t_val:
-            return False, f"Value mismatch for {key}: {b_val} vs {t_val}"
-    return True, "All values match"
-```
-
-### 5.3 Performance Measurement
-
-Compare checkpoint timings:
-
-| Checkpoint | Baseline (ms) | Optimized (ms) | Delta | % Change |
-|------------|---------------|----------------|-------|----------|
-| phase_1 | | | | |
-| phase_2 | | | | |
-| phase_N | | | | |
-| **total** | | | | |
-
-Calculate:
-- Delta = Optimized - Baseline (negative = improvement)
-- % Change = (Delta / Baseline) × 100
+Record p95/p99 for total. Save to `benchmarks/comparison.md`.
 
 ### 5.4 Statistical Significance
 
-Run multiple iterations (5-10) to account for variance:
+- Mean improvement %, std deviation, 95% CI (mean ± 1.96 × σ / √n)
+- **Reject if mean improvement <2%** — exception: correctness fixes integrate at any gain.
 
-```bash
-for i in {1..10}; do
-  ./run_benchmark.sh >> measurements.csv
-done
-```
-
-Calculate:
-- Mean improvement
-- Standard deviation
-- 95% confidence interval
-
-###  Results
-
-Update `5.5 Documentloop_XX/results.md`:
+### 5.5 Write `phase5_results.md`
 
 ```markdown
-# Loop XX Results
+# Loop XX: Results
 
 ## Optimization
-[Description of what was optimized]
+[What was optimized — cite Commandment #N]
 
-## Output Verification
-- [ ] Baseline captured
-- [ ] Test captured
-- [ ] Diff comparison: PASS/FAIL
-- [ ] Semantic comparison: PASS/FAIL
+## Output Integrity (Rule 1 — FIRST)
+- Excluded fields: [list]
+- Diff: PASS / FAIL
+- **Rule 1: COMPLIANT / VIOLATION → REJECTED**
 
-## Performance Results
+## Performance (Rule 2)
+| | Baseline p50 | Optimized p50 | Δ | % |
+|--|--|--|--|--|
+| Total | | | | |
 
-| Metric | Baseline | Optimized | Improvement |
-|--------|----------|-----------|-------------|
-| Total time | Xms | Yms | Z% |
-| Phase 1 | Xms | Yms | Z% |
-| ... | | | |
+p95: Xms → Yms | p99: Xms → Yms
 
-## Statistical Confidence
-- Samples: N
-- Mean improvement: X%
-- Std deviation: Y%
-- 95% CI: [A%, B%]
+## Statistics
+Samples: N | Mean: X% | σ: Y% | 95% CI: [A%, B%] | Threshold (2%): PASS/FAIL
+
+## Sacred Rules Compliance
+- [ ] Rule 1: diff PASS
+- [ ] Rule 2: ≥5 runs measured
+- [ ] Rule 3: no correctness regression
+- [ ] Rule 4: changes in test_server/
+- [ ] Rule 5: one optimization
+- [ ] Rule 6: documentation complete
+- [ ] Rule 7: rollback tag pending (Phase 6)
 
 ## Decision
-- [ ] APPROVED for integration
-- [ ] REJECTED (reason: ...)
-- [ ] NEEDS ITERATION (reason: ...)
+- [ ] APPROVED
+- [ ] REJECTED — [reason]
+- [ ] NEEDS ITERATION — [reason]
 ```
+
+All 7 rules must be checked before Phase 6.
 
 ---
 
 ## Outputs
 
-- [ ] Output comparison complete
-- [ ] Performance measurements recorded
-- [ ] Statistical analysis done
-- [ ] Results document updated
-- [ ] Decision made (approve/reject/iterate)
+- [ ] Diff run and documented (Rule 1 cited)
+- [ ] p50/p95/p99 measured ≥5 runs (Rule 2 cited)
+- [ ] `phase5_results.md` written — correctness before performance
+- [ ] All 7 rules checked
+- [ ] Decision documented
+- [ ] `README.md` updated with decision
 
----
+## Next Steps
 
-## Verification Checklist
+- **APPROVED** → create Phase 6 task
+- **REJECTED** → mark candidate rejected in `phase2_decompose.md`, begin next loop
+- **NEEDS ITERATION** → create Phase 4 retry task with specific fix
 
-Before approving for integration:
-
-- [ ] Zero output differences (or within epsilon)
-- [ ] Positive performance improvement (negative delta)
-- [ ] Statistically significant results
-- [ ] No regressions in any phase
-- [ ] Edge cases tested
-
----
-
-## Decision Matrix
-
-| Output Match | Performance | Decision |
-|--------------|-------------|----------|
-| Match | Improved | **APPROVE** |
-| Match | Same | Evaluate effort vs benefit |
-| Match | Worse | REJECT |
-| No Match | Any | **REJECT** |
-
----
-
-## Task Management
-
-At the end of this phase:
-
-1. Update results document
-2. Create integration task if approved
-3. Create iteration task if needs work
-4. Close task if rejected
-
----
-
-## Next Phase Criteria
-
-Phase 5 is complete when:
-
-1. Output verification passes
-2. Performance is measured
-3. Decision is documented
-4. Next steps are clear
-
-**Proceed to**: [Phase 6: Integrate](./06_integrate.md) (if approved)
+**Proceed to**: `references/phase_rules/06_integrate.md` (APPROVED only)
