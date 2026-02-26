@@ -1,6 +1,6 @@
 ---
 name: speed-loop
-description: Systematically optimizes a data processing flow through iterative speed loops. Use when the user wants to improve performance of a data pipeline, query, or processing endpoint. Invoke with the flow to optimize: /speed-loop path/to/file or /speed-loop describe the flow
+description: "Systematically optimizes a data processing flow through iterative speed loops. Use when the user wants to improve performance of a data pipeline, query, or processing endpoint. Invoke with the flow to optimize: /speed-loop path/to/file or /speed-loop describe the flow"
 ---
 
 # Speed Loop
