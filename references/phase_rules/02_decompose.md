@@ -2,6 +2,7 @@
 
 **Objective**: Break each fundamental piece into sub-components, cost them, and rank optimization candidates.
 
+Use sub-agents
 ---
 
 ## Sacred Rules in Play
